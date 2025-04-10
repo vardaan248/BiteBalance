@@ -11,11 +11,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Registering services
+// Registering custom services
 builder.Services.AddScoped<IUserRepository, InMemoryUserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<UserProfileService>();
 
-// Jwt service
+// Jwt service (Authentication)
 builder.Services.AddSingleton<JwtService>();
 builder.Services.AddJwtAuthentication(builder.Configuration); // Custom middleware
 

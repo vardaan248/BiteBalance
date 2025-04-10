@@ -21,4 +21,20 @@ public class InMemoryUserRepository : IUserRepository
 
     public Task<User?> GetByUsernameAsync(string username)
         => Task.FromResult(_users.FirstOrDefault(u => u.Username == username));
+
+    public Task<User?> GetByIdAsync(Guid id)
+    {
+        var user = _users.FirstOrDefault(u => u.Id == id);
+        return Task.FromResult(user);
+    }
+
+    public Task UpdateAsync(User user)
+    {
+        var index = _users.FindIndex(u => u.Id == user.Id);
+        if (index != -1)
+        {
+            _users[index] = user;
+        }
+        return Task.CompletedTask;
+    }
 }
