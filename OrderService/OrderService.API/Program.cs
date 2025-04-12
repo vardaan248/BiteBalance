@@ -1,5 +1,6 @@
 using Microsoft.IdentityModel.Tokens;
-using SubscriptionService.Infrastructure.Repositories;
+using OrderService.Domain.Interfaces;
+using OrderService.Infrastructure.Repositories;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,9 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Registering cutom services
-builder.Services.AddScoped<ISubscriptionRepository, InMemorySubscriptionRepository>();
-builder.Services.AddScoped<SubscriptionService.Application.Services.SubscriptionService>();
+builder.Services.AddScoped<IOrderRepository, InMemoryOrderRepository>();
+builder.Services.AddScoped<OrderService.Application.Services.OrderService>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
