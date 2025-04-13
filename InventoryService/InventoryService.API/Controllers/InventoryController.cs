@@ -1,5 +1,6 @@
-﻿using InventoryService.Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using InventoryService.Application.Models;
+using InventoryService.Application.Services;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -14,19 +15,26 @@ public class InventoryController : ControllerBase
 
     [HttpGet]
     public async Task<IActionResult> GetAll() =>
-        Ok(await _inventoryService.GetAllItemsAsync());
+        Ok(await _inventoryService.GetAllAsync());
 
-    [HttpPost("add")]
-    public async Task<IActionResult> Add(Item item)
+    [HttpPost("restock")]
+    public async Task<IActionResult> Restock([FromBody] InventoryInput input)
     {
-        await _inventoryService.AddItemAsync(item);
-        return Ok("Item added");
+        await _inventoryService.RestockAsync(input.Name, input.Quantity);
+        return Ok("Stock updated.");
     }
 
-    [HttpPatch("reduce")]
-    public async Task<IActionResult> Reduce([FromQuery] string name, [FromQuery] int quantity)
+    [HttpPost("consume")]
+    public async Task<IActionResult> Consume([FromBody] InventoryInput input)
     {
-        var result = await _inventoryService.ReduceStockAsync(name, quantity);
-        return result ? Ok("Stock reduced") : BadRequest("Insufficient stock or item not found");
+        var result = await _inventoryService.ConsumeAsync(input.Name, input.Quantity);
+        return result ? Ok("Stock reduced.") : BadRequest("Insufficient stock or item not found.");
+    }
+
+    [HttpPost("new-item")]
+    public async Task<IActionResult> AddNew([FromBody] InventoryItem item)
+    {
+        await _inventoryService.AddNewItemAsync(item.Name, item.Unit, item.QuantityAvailable);
+        return Ok("Item added.");
     }
 }

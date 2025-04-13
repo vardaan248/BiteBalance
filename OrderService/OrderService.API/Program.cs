@@ -1,3 +1,4 @@
+using Common.Common.HttpClients.Sales;
 using Microsoft.IdentityModel.Tokens;
 using OrderService.Domain.Interfaces;
 using OrderService.Infrastructure.Repositories;
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IOrderRepository, InMemoryOrderRepository>();
 builder.Services.AddScoped<OrderService.Application.Services.OrderService>();
+builder.Services.AddHttpClient<SalesHttpClient>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>

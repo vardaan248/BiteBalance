@@ -55,4 +55,12 @@ public class OrderController : ControllerBase
 
         return Ok("Order status updated");
     }
+
+    [HttpGet("summary")]
+    public async Task<IActionResult> GetSummary([FromQuery] DateTime date)
+    {
+        var summary = await _orderService.GetSummaryAsync(date);
+        return Ok(summary);
+    }
+
 }

@@ -8,4 +8,6 @@ public interface IOrderRepository
     Task<Order?> GetByIdAsync(Guid id);
     Task CreateAsync(Order order);
     Task UpdateAsync(Order order);
+    Task<List<Order>> GetByDateAsync(DateTime date);
+
 }

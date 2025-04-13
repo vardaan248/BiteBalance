@@ -1,11 +1,9 @@
 ﻿namespace InventoryService.Domain.Interfaces;
 
-using InventoryService.Domain.Entities;
-
 public interface IInventoryRepository
 {
-    Task<IEnumerable<Item>> GetAllAsync();
-    Task<Item?> GetByNameAsync(string name);
-    Task<bool> UpdateQuantityAsync(string name, int change);
-    Task AddAsync(Item item);
+    Task<IEnumerable<InventoryItem>> GetAllAsync();
+    Task<InventoryItem?> GetByNameAsync(string name);
+    Task AddAsync(InventoryItem item);
+    Task<bool> UpdateQuantityAsync(string name, double change);
 }

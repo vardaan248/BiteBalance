@@ -26,4 +26,11 @@ public class InMemoryOrderRepository : IOrderRepository
             _orders[index] = order;
         return Task.CompletedTask;
     }
+
+    public Task<List<Order>> GetByDateAsync(DateTime date)
+    {
+        var result = _orders.Where(o => o.OrderDate.Date == date.Date).ToList();
+        return Task.FromResult(result);
+    }
+
 }

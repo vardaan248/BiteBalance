@@ -1,23 +1,37 @@
-﻿namespace InventoryService.Application.Services;
+﻿using InventoryService.Domain.Interfaces;
 
-using global::InventoryService.Domain.Entities;
-using global::InventoryService.Domain.Interfaces;
+namespace InventoryService.Application.Services;
 
 public class InventoryService
 {
-    private readonly IInventoryRepository _repo;
+    private readonly IInventoryRepository _repository;
 
-    public InventoryService(IInventoryRepository repo)
+    public InventoryService(IInventoryRepository repository)
     {
-        _repo = repo;
+        _repository = repository;
     }
 
-    public Task<IEnumerable<Item>> GetAllItemsAsync() => _repo.GetAllAsync();
+    public Task<IEnumerable<InventoryItem>> GetAllAsync() =>
+        _repository.GetAllAsync();
 
-    public Task<Item?> GetItemByNameAsync(string name) => _repo.GetByNameAsync(name);
+    public Task<bool> ConsumeAsync(string name, double quantity) =>
+        _repository.UpdateQuantityAsync(name, -quantity);
 
-    public Task<bool> ReduceStockAsync(string name, int quantity) =>
-        _repo.UpdateQuantityAsync(name, -quantity);
+    public Task RestockAsync(string name, double quantity) =>
+        _repository.UpdateQuantityAsync(name, quantity);
 
-    public Task AddItemAsync(Item item) => _repo.AddAsync(item);
+    public async Task AddNewItemAsync(string name, string unit, double quantity)
+    {
+        var existing = await _repository.GetByNameAsync(name);
+        if (existing != null) return; // optional: throw instead
+
+        var item = new InventoryItem
+        {
+            Name = name,
+            Unit = unit,
+            QuantityAvailable = quantity
+        };
+
+        await _repository.AddAsync(item);
+    }
 }

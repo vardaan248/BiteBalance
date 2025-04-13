@@ -1,5 +1,5 @@
-using InventoryService.Domain.Interfaces;
-using InventoryService.Infrastructure.Repositories;
+using SalesService.Domain.Interfaces;
+using SalesService.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +8,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IInventoryRepository, InMemoryInventoryRepository>();
-builder.Services.AddScoped<InventoryService.Application.Services.InventoryService>();
+builder.Services.AddScoped<ISalesRepository, InMemorySalesRepository>();
+builder.Services.AddScoped<SalesService.Application.Services.SalesService>();
 
 var app = builder.Build();
 
@@ -21,5 +21,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.MapControllers();
+
 app.Run();

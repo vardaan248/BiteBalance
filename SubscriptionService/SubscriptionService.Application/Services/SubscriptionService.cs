@@ -1,12 +1,16 @@
-﻿namespace SubscriptionService.Application.Services
+﻿using Common.Common.HttpClients.Sales;
+
+namespace SubscriptionService.Application.Services
 {
     public class SubscriptionService
     {
         private readonly ISubscriptionRepository _repo;
+        private SalesHttpClient _salesHttpClient;
 
-        public SubscriptionService(ISubscriptionRepository repo)
+        public SubscriptionService(ISubscriptionRepository repo, SalesHttpClient salesHttpClient)
         {
             _repo = repo;
+            _salesHttpClient = salesHttpClient;
         }
 
         public async Task<List<SubscriptionDto>> GetUserSubscriptionsAsync(Guid userId)
@@ -44,6 +48,13 @@
             };
 
             await _repo.AddAsync(sub);
+
+            await _salesHttpClient.SendSaleAsync(new SaleRecordRequest
+            {
+                OrderId = sub.Id,
+                Amount = sub.Price,
+                Type = "Subscription"
+            });
         }
 
         public Task CancelAsync(Guid subscriptionId)

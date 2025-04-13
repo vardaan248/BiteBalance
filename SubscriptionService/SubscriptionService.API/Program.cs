@@ -1,3 +1,4 @@
+using Common.Common.HttpClients.Sales;
 using Microsoft.IdentityModel.Tokens;
 using SubscriptionService.Infrastructure.Repositories;
 using System.Text;
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 // Registering cutom services
 builder.Services.AddScoped<ISubscriptionRepository, InMemorySubscriptionRepository>();
 builder.Services.AddScoped<SubscriptionService.Application.Services.SubscriptionService>();
+builder.Services.AddHttpClient<SalesHttpClient>();
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>

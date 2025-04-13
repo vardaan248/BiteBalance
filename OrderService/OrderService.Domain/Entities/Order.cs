@@ -7,7 +7,7 @@ public class Order
     public string[] Items { get; set; } = [];
     public decimal TotalAmount { get; set; }
     public DateTime OrderDate { get; set; } = DateTime.UtcNow;
-    public string Status { get; set; } = "Pending";
+    public string Status { get; set; } = "Placed"; // Placed, Cancelled, Delivered etc.
     public string? PaymentMethod { get; set; }
     public DateTime? EstimatedDeliveryTime { get; set; }
 }

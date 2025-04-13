@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.HttpClients\Common.HttpClients.csproj" />
     <ProjectReference Include="..\SubscriptionService.Domain\SubscriptionService.Domain.csproj" />
   </ItemGroup>
 
