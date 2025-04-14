@@ -1,6 +1,4 @@
-using SalesService.Application.Interfaces;
-using SalesService.Domain.Interfaces;
-using SalesService.Infrastructure.Repositories;
+using ProfitLossService.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +7,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ISalesRepository, InMemorySalesRepository>();
-builder.Services.AddScoped<ISalesService, SalesService.Infrastructure.Services.SalesService>();
+builder.Services.AddHttpClient<IProfitLossService, ProfitLossService.Infrastructure.Services.ProfitLossService>();
 
 var app = builder.Build();
 
@@ -22,7 +19,5 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.MapControllers();
-
 app.Run();

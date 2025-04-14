@@ -1,8 +1,9 @@
-﻿using InventoryService.Domain.Interfaces;
+﻿using InventoryService.Application.Interfaces;
+using InventoryService.Domain.Interfaces;
 
 namespace InventoryService.Application.Services;
 
-public class InventoryService
+public class InventoryService : IInventoryService
 {
     private readonly IInventoryRepository _repository;
 
@@ -34,4 +35,14 @@ public class InventoryService
 
         await _repository.AddAsync(item);
     }
+
+    //public async Task<decimal> GetDailyInventoryCostAsync(DateTime date)
+    //{
+    //    var totalUsed = _inventoryInputs
+    //        .Where(i => i.Date.Date == date.Date)
+    //        .Sum(i => i.Quantity * i.PricePerUnit);
+
+    //    return await Task.FromResult(totalUsed);
+    //}
+
 }

@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\SalesService.Application\SalesService.Application.csproj" />
-    <ProjectReference Include="..\SalesService.Domain\SalesService.Domain.csproj" />
+    <ProjectReference Include="..\ProfitLossService.Domain\ProfitLossService.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

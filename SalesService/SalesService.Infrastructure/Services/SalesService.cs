@@ -1,10 +1,11 @@
-﻿using SalesService.Application.Models;
+﻿using SalesService.Application.Interfaces;
+using SalesService.Application.Models;
 using SalesService.Domain.Entities;
 using SalesService.Domain.Interfaces;
 
-namespace SalesService.Application.Services
+namespace SalesService.Infrastructure.Services
 {
-    public class SalesService
+    public class SalesService : ISalesService
     {
         private readonly ISalesRepository _repository;
 
@@ -37,6 +38,18 @@ namespace SalesService.Application.Services
                 TotalTransactions = sales.Count()
             };
         }
+
+        public async Task<decimal> GetDailySalesAsync(DateTime date)
+        {
+            var sales = await _repository.GetByDateAsync(date);
+
+            var dailySales = sales
+                .Where(s => s.Date.Date == date.Date)
+                .Sum(s => s.Amount);
+
+            return await Task.FromResult(dailySales);
+        }
+
     }
 
 }

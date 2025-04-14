@@ -1,10 +1,12 @@
-﻿using InventoryService.Domain.Interfaces;
+﻿using InventoryService.Domain.Entities;
+using InventoryService.Domain.Interfaces;
 
 namespace InventoryService.Infrastructure.Repositories;
 
 public class InMemoryInventoryRepository : IInventoryRepository
 {
     private static readonly List<InventoryItem> _items = new();
+    private readonly List<InventoryInput> _inputs = new();
 
     public Task<IEnumerable<InventoryItem>> GetAllAsync() =>
         Task.FromResult(_items.AsEnumerable());
@@ -27,5 +29,16 @@ public class InMemoryInventoryRepository : IInventoryRepository
 
         item.QuantityAvailable += change;
         return Task.FromResult(true);
+    }
+
+    public Task AddInventoryInputAsync(InventoryInput input)
+    {
+        _inputs.Add(input);
+        return Task.CompletedTask;
+    }
+
+    public Task<IEnumerable<InventoryInput>> GetInventoryInputsAsync()
+    {
+        return Task.FromResult(_inputs.AsEnumerable());
     }
 }

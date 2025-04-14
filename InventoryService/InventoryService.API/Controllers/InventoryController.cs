@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using InventoryService.Application.Models;
-using InventoryService.Application.Services;
+﻿using InventoryService.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]

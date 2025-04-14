@@ -7,9 +7,9 @@ namespace SalesService.API.Controllers
     [Route("api/[controller]")]
     public class SalesController : ControllerBase
     {
-        private readonly SalesService.Application.Services.SalesService _salesService;
+        private readonly Infrastructure.Services.SalesService _salesService;
 
-        public SalesController(SalesService.Application.Services.SalesService salesService)
+        public SalesController(Infrastructure.Services.SalesService salesService)
         {
             _salesService = salesService;
         }
