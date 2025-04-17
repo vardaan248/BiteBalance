@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UserService.Application.DTOs;
 using UserService.Application.Interfaces;
 
 namespace UserService.API.Controllers;
@@ -23,9 +24,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(string email, string password)
+    public async Task<IActionResult> Login([FromBody]UserLogin userLogin)
     {
-        var result = await _authService.LoginAsync(email, password);
+        var result = await _authService.LoginAsync(userLogin.Email, userLogin.Password);
         return Ok(result);
     }
 

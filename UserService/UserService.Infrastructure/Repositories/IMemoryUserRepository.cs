@@ -7,7 +7,7 @@ public class InMemoryUserRepository : IUserRepository
 {
     private readonly List<User> _users = new()
     {
-        new User() { Email = "vs@vs.com", Id = Guid.NewGuid(), PasswordHash = "8TBVnw5/+fjcYFgxpfwCyLbs0Cy535T8GpD4/5hwlgg=", Role = "Admin", Username = "vsethi" },
+        new User() { Email = "vs@vs.com", Id = Guid.NewGuid(), Password = "8TBVnw5/+fjcYFgxpfwCyLbs0Cy535T8GpD4/5hwlgg=", Role = "Admin", Username = "vsethi" },
     };
 
     public Task AddAsync(User user)

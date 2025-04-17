@@ -23,7 +23,7 @@ public class AuthService : IAuthService
         {
             Username = username,
             Email = email,
-            PasswordHash = HashPassword(password)
+            Password = HashPassword(password)
         };
 
         await _userRepository.AddAsync(user);
@@ -33,10 +33,10 @@ public class AuthService : IAuthService
     public async Task<string> LoginAsync(string email, string password)
     {
         var user = await _userRepository.GetByEmailAsync(email);
-        if (user == null || user.PasswordHash != HashPassword(password))
+        if (user == null || user.Password != HashPassword(password))
             throw new Exception("Invalid credentials");
 
-        return _jwtService.GenerateToken(user.Id.ToString(), user.Email);
+        return _jwtService.GenerateToken(user);
     }
 
     private string HashPassword(string password)
