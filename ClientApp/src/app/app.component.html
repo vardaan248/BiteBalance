@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">BiteBalance</a>
+    <div class="d-flex align-items-center">
+      <img
+        [src]="themeIcon"
+        (click)="toggleTheme()"
+        alt="Toggle Theme"
+        class="theme-toggle-icon"
+        width="30" height="30" style="cursor: pointer;"
+      /></div>
+  </div>
+</nav>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<footer [ngClass]="{ 'bg-dark text-light': isDarkMode, 'bg-light text-dark': !isDarkMode }" class="text-center py-3 mt-5">
+  <p class="mb-0">&copy; 2025 BiteBalance</p>
+</footer>

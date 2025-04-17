@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${SA_PASSWORD}
+    ports:
+      - "1433:1433"
+    networks:
+      - app-network
+
+  userservice.api:
+    build:
+      context: .
+      dockerfile: UserService/UserService.API/Dockerfile
+    ports:
+      - "5029:80"
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME};User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=True;
+    depends_on:
+      - sqlserver
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
